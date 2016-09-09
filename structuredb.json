@@ -1,0 +1,60 @@
+{
+  "test" : {
+    "name" : "yox"
+  },
+  "users":{
+    "hlCJ4pmv09f5aoHk73X08cWaxcn2":{
+          "email":"sompop.kulpalanont@gmail.com",
+          "fullname":"Sompop Kulapalanont",
+          "nickname":"Pop(!)",
+          "group":{
+            "admin":true,
+            "teacher":false,
+            "banking":false,
+            "newbie":false
+          }
+      }
+  },
+  "courses":{
+    "LH001":{
+      "code":"LH01",
+      "name":"",
+      "group":{
+        "lindyhop":true
+      }
+    }
+  },
+  "users_complete_courses":{
+      "hlCJ4pmv09f5aoHk73X08cWaxcn2":{
+        "LH001":true
+      }
+  },
+  
+  "groups":{
+    "admin":{
+      "name":"Admin",
+      "memberes":{
+        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
+      }
+    },
+    "teacher":{
+      "name":"Teacher",
+      "memberes":{
+        
+      }
+    },
+    "banking":{
+      "name":"Banking",
+      "memberes":{
+        
+      }
+    },
+    "newbie":{
+      "name":"Newbies",
+      "memberes":{
+        
+      }
+    }
+
+  }
+}

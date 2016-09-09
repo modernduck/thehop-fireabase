@@ -1,5 +1,7 @@
 import { Injectable,Component } from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseAuth} from 'angularfire2';
+import { AngularFire, FirebaseObjectObservable, FirebaseAuth } from 'angularfire2';
+import { LoginService } from './login.service'
+import { LoginComponent } from "./login/login.component"
 
 @Component({
   moduleId: module.id,
@@ -9,19 +11,22 @@ import {AngularFire, FirebaseObjectObservable, FirebaseAuth} from 'angularfire2'
 })
 export class AppComponent {
   title = 'app works!';
-  test:FirebaseObjectObservable<any>
-  af:AngularFire
-  constructor(af: AngularFire,public auth: FirebaseAuth) {
+  test:FirebaseObjectObservable<any>;
+  current_user:FirebaseObjectObservable<any>;
+  loginService:LoginService;
+  
+  constructor(private af: AngularFire,public auth: FirebaseAuth) {
     this.af = af;
-    this.test = af.database.object('/test')
-    
-    console.log(this.af)
+    this.loginService = new LoginService(af, auth);  
   }
   getObject() {
     //this.test  = {name:'kuy'}
     this.af.database.object('/test').set({name:'yox'})
     //
     this.test = this.af.database.object('/test')
+    
+  
+    //this.current_user = this.af.database.object('/users')
   }
   login() {
     

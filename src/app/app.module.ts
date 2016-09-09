@@ -1,9 +1,8 @@
-
-//import { AngularFireModule } from 'angularfire2';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode, NgModule } from '@angular/core';
 import { AppComponent }  from './app.component';
+import { LoginComponent } from "./login/login.component"
 import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
 
 // Must export the config
@@ -25,7 +24,7 @@ const myFirebaseAuthConfig = {
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig,myFirebaseAuthConfig)
   ],
-  declarations: [ AppComponent ],
+  declarations: [ AppComponent, LoginComponent ],
   bootstrap: [ AppComponent,
      
      

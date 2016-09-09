@@ -1,0 +1,11 @@
+<div>
+  <div *ngIf="loginService.isLogin()">
+    <div>Welcome {{(loginService.info | async)?.nickname}}</div>
+    <button (click)="logout()" class="btn btn-inverse">Log Out</button>
+
+  </div>
+  <div *ngIf="!loginService.isLogin()">
+     <button (click)="login()" class="btn btn-primary">Google Login</button>
+
+  </div>
+</div>
