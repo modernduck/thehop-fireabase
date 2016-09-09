@@ -1,3 +1,15 @@
 <h1>
   {{title}}
 </h1>
+Test Data
+<div> {{ (af.auth | async)?.uid }} </div>
+json
+<p>af auth => {{af.auth }}</p>
+<button (click)="login()">Login</button>
+<button (click)="logout()">Logout</button>
+<button (click)="testAuth()">Test</button>
+<button (click)="getObject()">OBJECT</button>
+
+AUTH => {{auth}}
+<h1>Test(name)</h1>
+{{(test | async)?.name}}
