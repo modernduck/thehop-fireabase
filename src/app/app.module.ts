@@ -2,8 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode, NgModule } from '@angular/core';
 import { AppComponent }  from './app.component';
-import { LoginComponent } from "./login/login.component"
+import { LoginComponent, LogoutComponent } from "./login"
+import { CoursesComponent } from './courses/courses.component'
+import { MenuComponent, MenuLoginComponent } from "./menu/"
 import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
+import { routing } from './app.routing';
 
 // Must export the config
 export const firebaseConfig = {
@@ -22,9 +25,11 @@ const myFirebaseAuthConfig = {
 @NgModule({
   imports: [
     BrowserModule,
+    routing,
+    
     AngularFireModule.initializeApp(firebaseConfig,myFirebaseAuthConfig)
   ],
-  declarations: [ AppComponent, LoginComponent ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent ],
   bootstrap: [ AppComponent,
      
      

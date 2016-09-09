@@ -5,11 +5,11 @@ import { LoginService } from '../login.service'
 
 @Component({
   moduleId: module.id,
-  selector: 'login-box',
-  templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css']
+  selector:"logout-box",
+  template:'nope'
+  
 })
-export class LoginComponent implements OnInit {
+export class LogoutComponent implements OnInit {
   
   private loginService:LoginService;
   constructor(private af:AngularFire, private auth:FirebaseAuth,  private router: Router) {
@@ -18,22 +18,14 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.loginService.logout()
     this.af.auth.subscribe(user => {
-      if(user)
+      if(!user)
       {
-        this.router.navigate(["/courses"])
+        this.router.navigate([""])
       }
     })
   }
 
-  logout(){
-    this.loginService.logout()
-  }
-
-  
-
-  login(){
-    this.loginService.login()
-  }
 
 }
