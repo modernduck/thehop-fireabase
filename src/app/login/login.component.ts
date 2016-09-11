@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.af.auth.subscribe(user => {
       if(user)
       {
-        this.router.navigate(["/courses"])
+        this.router.navigate(["/profile"])
       }
     })
   }

@@ -3,11 +3,11 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
-import { ProfileComponent } from './profile.component';
+import { GroupComponent } from './group.component';
 
-describe('Component: Profile', () => {
+describe('Component: Group', () => {
   it('should create an instance', () => {
-    let component =  ProfileComponent;
+    let component =  GroupComponent;
     expect(component).toBeTruthy();
   });
 });

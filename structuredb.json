@@ -18,7 +18,8 @@
   "courses":{
     "LH001":{
       "code":"LH01",
-      "name":"",
+      "name":"Beginner Lindy Hop",
+      
       "group":{
         "lindyhop":true
       }
@@ -33,28 +34,29 @@
   "groups":{
     "admin":{
       "name":"Admin",
-      "memberes":{
+      "members":{
         "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
       }
     },
     "teacher":{
       "name":"Teacher",
-      "memberes":{
+      "members":{
         
       }
     },
     "banking":{
       "name":"Banking",
-      "memberes":{
+      "membere":{
         
       }
     },
     "newbie":{
       "name":"Newbies",
-      "memberes":{
+      "members":{
         
       }
     }
 
+  
   }
 }

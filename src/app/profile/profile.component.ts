@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login.service';
+import { FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
   moduleId: module.id,
@@ -8,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  
+  
+  constructor(private lg:LoginService) {
+      
+      
+    
+    
+   }
 
   ngOnInit() {
+    
+    
   }
 
+  
 }

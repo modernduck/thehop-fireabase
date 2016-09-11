@@ -1,12 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode, NgModule } from '@angular/core';
+import { enableProdMode, NgModule, Renderer } from '@angular/core';
 import { AppComponent }  from './app.component';
 import { LoginComponent, LogoutComponent } from "./login"
 import { CoursesComponent } from './courses/courses.component'
+import { ProfileComponent, ProfileEditComponent } from "./profile"
+import { GroupComponent } from "./group"
 import { MenuComponent, MenuLoginComponent } from "./menu/"
-import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
+
+import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
+import { LoginService } from "./login.service"
+import { UploadService } from "./upload.service"
+import { UserService } from "./user.service"
+import { GroupService } from "./group.service"
 import { routing } from './app.routing';
+import { Object2ArrayPipe, ObjectTrue2ArrayPipe } from "./app.pipe"
 
 // Must export the config
 export const firebaseConfig = {
@@ -26,10 +35,19 @@ const myFirebaseAuthConfig = {
   imports: [
     BrowserModule,
     routing,
-    
+    FormsModule,
     AngularFireModule.initializeApp(firebaseConfig,myFirebaseAuthConfig)
+    
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent ],
+  providers:[
+    FIREBASE_PROVIDERS,
+    LoginService,
+    UploadService,
+    Renderer,
+    UserService,
+    GroupService
+  ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe ],
   bootstrap: [ AppComponent,
      
      

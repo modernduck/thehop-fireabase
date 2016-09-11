@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} from 'angularfire2';
+
+import { UserService } from './user.service'
 
 @Injectable()
 export class LoginService {
@@ -7,11 +10,13 @@ export class LoginService {
   
   _isLogin = false;
   _callbackSuccess:any;
-
+  public currentUserKey;
   public test = "yo"
+  public currentUser:FirebaseObjectObservable<any> = null;
+  
   public info:FirebaseObjectObservable<any> = null;
   private user:FirebaseAuthState;
-
+  private userService:UserService 
   private getDefaultGroup()
   {
     return {
@@ -19,23 +24,6 @@ export class LoginService {
       banking:false,
       newbie:true,
       teacher:false
-    }
-  }
-
-  private getGoogleInfo (userAuth)
-  {
-    console.log('gonna get info')
-    
-
-
-
-    return {
-      "email": userAuth.email,
-      "nickname":userAuth.displayName?userAuth.displayName:userAuth.email,
-      "fullname":userAuth.displayName?userAuth.displayName:userAuth.email,
-      "picture":userAuth.photoURL,
-      "group":this.getDefaultGroup()
-
     }
   }
 
@@ -49,8 +37,9 @@ export class LoginService {
       if(typeof data.email == "undefined")
       {
         console.log('create stuff')
-        console.log(this.getGoogleInfo(this.user.auth))
-        this.af.database.object('users/' + uid).set(this.getGoogleInfo(this.user.auth))
+        //console.log(this.getGoogleInfo(this.user.auth))
+        //this.af.database.object('users/' + uid).set(this.getGoogleInfo(this.user.auth))
+        this.userService.setUser(uid, this.userService.getNewGoogleUser(this.user.auth))
         
       }
       
@@ -60,12 +49,16 @@ export class LoginService {
 
   constructor(private af: AngularFire,public auth: FirebaseAuth) {
     //this.info = this.af.database.object('users/hlCJ4pmv09f5aoHk73X08cWaxcn2')
+    this.userService = new UserService(af, auth);
+    
     this.af.auth.subscribe(user=>{
       
       if(user)
       {
         this.user = user;
+        this.currentUserKey = this.user.uid
         this._isLogin = true;
+        this.currentUser =this.userService.getUser(this.user.uid)
         this.fetchInfo(user.uid)
       }else
       {
@@ -81,6 +74,22 @@ export class LoginService {
   }
   logout(){
     this.auth.logout();
+  }
+
+
+
+  getCurrentUser(callback)
+  {
+    this.af.auth.subscribe(user=>{
+      if(user)
+      {
+        this.af.database.object('users/' + user.uid).subscribe(data =>{
+          callback(data)
+        })
+      }
+    });
+     
+
   }
 
 }

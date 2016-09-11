@@ -1,0 +1,13 @@
+<p>
+  All Group
+</p>
+<div *ngIf="groups | async">
+<ul>
+    <li *ngFor="let item of groups | async">
+      {{ item.name }} 
+      <span *ngIf="item.members">
+        ( {{(item.members | objectTrue2Array).length}} )
+      </span>
+    </li>
+  </ul>
+</div>
