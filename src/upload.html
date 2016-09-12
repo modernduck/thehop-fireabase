@@ -56,17 +56,17 @@
             console.log('Upload is ' + progress + '% done');
             if(progress == 100)
             {
-                console.log(snapshot)
-                setInterval(function(){
-                    localStorage['_image_upload_status'] = "complete"
-                    localStorage['_image_upload_data'] = JSON.stringify({
-                        "name":snapshot.a.name,
-                        "downloadUrl":snapshot.a.downloadURLs,
-                        "fullPath":snapshot.a.fullPath,
-                        "size":snapshot.a.size
-                    })
-                    window.close();
-                }, 500)
+                //console.log(snapshot)
+                
+                localStorage['_image_upload_status'] = "complete"
+                localStorage['_image_upload_data'] = JSON.stringify({
+                    "name":snapshot.a.name,
+                    "downloadUrl":snapshot.a.downloadURLs,
+                    "fullPath":snapshot.a.fullPath,
+                    "size":snapshot.a.size
+                })
+                    
+                
             }
             switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -93,6 +93,7 @@
         }, function() {
         // Upload completed successfully, now we can get the download URL
         var downloadURL = uploadTask.snapshot.downloadURL;
+        window.close();
         });
   }
 
@@ -108,5 +109,7 @@
   }
 
 </script>
-Upload <input type="file" id="input">
-<button onclick="upload()" >Upload Now</button>
+<section>
+    <div>Selected File <input type="file" id="input"></div>
+    <div><button onclick="upload()" >Upload Now</button></div>
+</section>
