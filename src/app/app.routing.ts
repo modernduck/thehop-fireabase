@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent, LogoutComponent }      from './login';
 import { ProfileComponent, ProfileEditComponent } from "./profile"
 import { CoursesComponent } from "./courses/courses.component";
-import { GroupComponent } from "./group"
+import { GroupComponent, GroupFormComponent } from "./group"
 
 const appRoutes: Routes = [
   {
@@ -30,6 +30,10 @@ const appRoutes: Routes = [
   {
     path: 'group',
     component: GroupComponent
+  },
+  {
+    path: 'group/:slug',
+    component: GroupFormComponent
   },
   {
     path:'courses',

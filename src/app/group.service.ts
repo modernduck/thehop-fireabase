@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} from 'angularfire2';
 
-const FIX_GROUP_NAME =["admin", "banking", "teacher", "newbie" ]
+const FIX_GROUP_NAME =["admin", "banking", "teacher", "newbie","new" ]
 @Injectable()
 export class GroupService {
 
@@ -32,6 +32,15 @@ export class GroupService {
       .replace(/\-\-+/g, '-')         // Replace multiple - with single -
       .replace(/^-+/, '')             // Trim - from start of text
       .replace(/-+$/, '');            // Trim - from end of text
+  }
+
+  getBlankGroup()
+  {
+    return {
+      "member_names":[],
+      "members":[],
+      "name":"New Group Name"
+    }
   }
 
   getAllGroup()

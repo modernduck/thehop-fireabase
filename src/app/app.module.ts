@@ -6,9 +6,9 @@ import { AppComponent }  from './app.component';
 import { LoginComponent, LogoutComponent } from "./login"
 import { CoursesComponent } from './courses/courses.component'
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { GroupComponent } from "./group"
+import { GroupComponent, GroupFormComponent } from "./group"
 import { MenuComponent, MenuLoginComponent } from "./menu/"
-
+import { UsersFinderComponent } from "./users"
 import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
 import { LoginService } from "./login.service"
 import { UploadService } from "./upload.service"
@@ -47,7 +47,7 @@ const myFirebaseAuthConfig = {
     UserService,
     GroupService
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent ],
   bootstrap: [ AppComponent,
      
      

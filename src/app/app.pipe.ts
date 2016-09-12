@@ -16,6 +16,7 @@ export class Object2ArrayPipe implements PipeTransform {
       {
           var tmp={}
           tmp[key] = obj[key]
+          
           result.push(tmp)
       }
       return result;
@@ -34,6 +35,7 @@ export class ObjectTrue2ArrayPipe implements PipeTransform {
          {
             var tmp={}
             tmp[key] = obj[key]
+            tmp["$key"] = key
             result.push(tmp)
          }
       }

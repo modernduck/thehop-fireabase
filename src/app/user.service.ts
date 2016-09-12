@@ -5,7 +5,7 @@ import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} 
 @Injectable()
 export class UserService {
 
-  constructor(private af:AngularFire, private auth:FirebaseAuth) { }
+  constructor(private af:AngularFire) { }
 
   private getDefaultGroup()
   {
@@ -37,7 +37,9 @@ export class UserService {
     {
       if( user.group[group_name] === true)
       {
+
         this.af.database.object('groups/' + group_name + '/members/' + user_key).set(true)
+        this.af.database.object('groups/' + group_name + '/member_names/' + user_key).set(user.nickname)
       }else
       {
         this.af.database.object('groups/' + group_name + '/members/' + user_key).set(false)
@@ -47,7 +49,18 @@ export class UserService {
 
   }
 
-  
+  public getAllUser(limit?: number)
+  {
+    console.log('get em all')
+    if(limit)
+      return this.af.database.list('users', {
+        query:{
+          limitToLast:limit
+        }
+      })
+    else
+      return this.af.database.list('users')
+  }
 
   public updatePicture(user_key, pictureUrl)
   {
@@ -61,6 +74,7 @@ export class UserService {
 
   public getUserNickname(user_key)
   {
+    console.log('user_key: ' + user_key)
     return this.af.database.object('users/' + user_key + '/nickname')
   }
 

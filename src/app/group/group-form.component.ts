@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from "../group.service"
 import { UserService } from "../user.service"
+import { ActivatedRoute, Params, Router  } from "@angular/router"
 
 @Component({
   moduleId: module.id,
@@ -10,12 +11,52 @@ import { UserService } from "../user.service"
 })
 export class GroupFormComponent implements OnInit {
   private members
-  constructor(private groupService:GroupService, private userService:UserService) {
-      
+  private slug
+  private group
+  private isNew 
+  constructor(private groupService:GroupService, private userService:UserService, private route:ActivatedRoute, private router:Router) {
+     
    }
 
   ngOnInit() {
     
+       this.route.params.forEach((params: Params) => {
+          this.slug = params['slug']
+          this.isNew = this.slug == "new"
+          if(!this.isNew)
+            this.groupService.getGroup(this.slug).subscribe(group=>{
+              this.group = group;
+            })
+          else
+            this.group = this.groupService.getBlankGroup()
+
+        });
+       
+  }
+
+  save()
+  {
+    if(!this.isNew)
+    {
+      //just rename
+      //and deal with member i guess?
+    
+    }else
+    {
+      this.groupService.createGroup(this.group.name)
+      
+    }
+    this.router.navigate(['group'])
+  }
+
+  delete()
+  {
+    if(!this.isNew)
+      if(confirm("Are you sure to delete this group? this cannot be revert"))
+      {
+        this.groupService.deleteGroup(this.group.$key)
+        this.router.navigate(['group'])
+      }
   }
 
 }
