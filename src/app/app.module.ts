@@ -6,16 +6,17 @@ import { AppComponent }  from './app.component';
 import { LoginComponent, LogoutComponent } from "./login"
 import { CoursesComponent } from './courses/courses.component'
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { GroupComponent, GroupFormComponent } from "./group"
+import { GroupComponent, GroupFormComponent,GroupJoinedDisplayComponent } from "./group"
 import { MenuComponent, MenuLoginComponent } from "./menu/"
-import { UsersFinderComponent } from "./users"
+import { UsersFinderComponent, FilterByUserAttributePipe } from "./users"
 import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
 import { LoginService } from "./login.service"
 import { UploadService } from "./upload.service"
 import { UserService } from "./user.service"
 import { GroupService } from "./group.service"
 import { routing } from './app.routing';
-import { Object2ArrayPipe, ObjectTrue2ArrayPipe } from "./app.pipe"
+import { Object2ArrayPipe, ObjectTrue2ArrayPipe, FilterByAttributePipe } from "./app.pipe"
+
 
 // Must export the config
 export const firebaseConfig = {
@@ -47,7 +48,7 @@ const myFirebaseAuthConfig = {
     UserService,
     GroupService
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe ],
   bootstrap: [ AppComponent,
      
      

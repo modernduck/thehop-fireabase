@@ -43,3 +43,32 @@ export class ObjectTrue2ArrayPipe implements PipeTransform {
     //return Math.pow(value, isNaN(exp) ? 1 : exp);
   }
 }
+
+
+/*
+ * Transform object to list of array
+ * Usage:
+ *   [{"nickname":"sompop"}, {"nickname":"sompap"}] | filterByAttribute:"nickname":"pop"
+ * Example:
+ *   [{"nickname":"sompop"}, {"nickname":"sompap"}] | filterByAttribute:"nickname":"pop"
+ *   formats to: [{"nickname":"pop"}]
+*/
+@Pipe({name: 'filterByAttribute'})
+export class FilterByAttributePipe implements PipeTransform {
+  transform(input_array:Array<any>, attribute_name:string , attribute_value:string): any{
+      //
+      if(input_array)
+        return input_array.filter((value, index, arr) =>{
+            if(value[attribute_name] && attribute_value)
+            {
+              return  value[attribute_name].toLowerCase().indexOf(attribute_value.toLowerCase()) >= 0
+            }
+          return true; 
+
+        })
+      else
+        return input_array
+    
+  }
+}
+

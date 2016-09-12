@@ -1,24 +1,27 @@
-<section class="users-finder">
-    FINDER of user
-    <div *ngIf="users">
-        <table class="table table-striped">
-            <thead>
-                <th>Picture</th>
-                <th>Nickname</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Group</th>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of (users| async)">
-                    <td><img src="{{item.picture}}"/></td>
-                    <td>{{item.nickname}}</td>
-                    <td>{{item.fullname}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.group | objectTrue2Array | json}}</td>
-                </tr>
-            </tbody>
+<section class="users-finder" *ngIf="display">
+    
+    <div>
+        <input type="text" class="form-control" [(ngModel)]="q" (keypress)="onKeyPress($event)"  placeholder="Search for Name / Email / Group" />  
+        <div *ngIf="users">
+            <table class="table table-striped">
+                <thead>
+                    <th>Picture</th>
+                    <th>Nickname</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Group</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of (users| async) | filterByUserAttribute:q" (click)="select(item)">
+                        <td><img src="{{item.picture}}"/></td>
+                        <td>{{item.nickname}}</td>
+                        <td>{{item.fullname}}</td>
+                        <td>{{item.email}}</td>
+                        <td><group-joined-display [groups]="item.group"></group-joined-display></td>
+                    </tr>
+                </tbody>
 
-        </table>
+            </table>
+        </div>
     </div>
 </section>

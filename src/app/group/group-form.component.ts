@@ -14,6 +14,8 @@ export class GroupFormComponent implements OnInit {
   private slug
   private group
   private isNew 
+  private isAddUser = false;
+  private selectedUser = null;
   constructor(private groupService:GroupService, private userService:UserService, private route:ActivatedRoute, private router:Router) {
      
    }
@@ -32,6 +34,18 @@ export class GroupFormComponent implements OnInit {
 
         });
        
+  }
+
+  onSelectedUser(user)
+  {
+    this.selectedUser = user;
+    this.isAddUser = false;
+    this.groupService.addMember(this.slug ,user);
+  }
+
+  removeUser(user_key)
+  {
+    this.groupService.removeMember(this.slug, user_key)
   }
 
   save()

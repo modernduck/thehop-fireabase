@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from "../user.service"
 
 
@@ -10,12 +10,39 @@ import { UserService } from "../user.service"
 })
 export class UsersFinderComponent implements OnInit {
   private users;
+  private q;
+  private last_filter;
+  public selectedUser;
+
+  @Input()
+  display
+
+  @Output()
+  onSelected = new EventEmitter<any>();
+
   constructor(private userService:UserService) { 
       
   }
 
   ngOnInit() {
      this.users = this.userService.getAllUser()
+     if(typeof this.display == "undefined")
+        this.display = true;
+      console.log(this.display)
   }
 
+  select(user)
+  {
+    
+    this.selectedUser = user;
+    this.onSelected.emit(user)
+  }
+
+  onKeyPress(e)
+  {
+    
+
+  }
+
+  
 }

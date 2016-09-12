@@ -83,4 +83,23 @@ export class GroupService {
     this.af.database.object("groups/" + slug + "/members/" + user_key).remove();
   }
 
+  addMember(slug:string, user)
+  {
+    //user.$key = usekey
+    this.af.database.object("groups/" + slug + "/members/" + user.$key).set(true)
+    this.af.database.object("groups/" + slug + "/member_names/" + user.$key).set(user.nickname)
+    //add group in that user too
+    this.af.database.object("users/" + user.$key + "/group/" + slug).set(true);
+  }
+
+  removeMember(slug:string, user_key:string)
+  {
+      this.af.database.object("groups/" + slug + "/members/" + user_key).remove()
+    this.af.database.object("groups/" + slug + "/member_names/" + user_key).remove()
+    //add group in that user too
+    this.af.database.object("users/" + user_key + "/group/" + slug).remove()
+  }
+
+
+
 }
