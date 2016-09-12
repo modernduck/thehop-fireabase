@@ -11,9 +11,9 @@ import { LoginService } from '../login.service'
 })
 export class LogoutComponent implements OnInit {
   
-  private loginService:LoginService;
-  constructor(private af:AngularFire, private auth:FirebaseAuth,  private router: Router) {
-    this.loginService = new LoginService(af, auth);
+  
+  constructor(private af:AngularFire, private auth:FirebaseAuth,  private router: Router,private loginService:LoginService) {
+  
      
    }
 

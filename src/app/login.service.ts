@@ -16,7 +16,7 @@ export class LoginService {
   
   public info:FirebaseObjectObservable<any> = null;
   private user:FirebaseAuthState;
-  private userService:UserService 
+  
   private getDefaultGroup()
   {
     return {
@@ -47,9 +47,9 @@ export class LoginService {
     })
   }
 
-  constructor(private af: AngularFire,public auth: FirebaseAuth) {
+  constructor(private af: AngularFire,public auth: FirebaseAuth, private userService:UserService) {
     //this.info = this.af.database.object('users/hlCJ4pmv09f5aoHk73X08cWaxcn2')
-    this.userService = new UserService(af, auth);
+    
     
     this.af.auth.subscribe(user=>{
       

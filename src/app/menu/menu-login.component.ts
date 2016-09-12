@@ -10,12 +10,11 @@ import { AngularFire, FirebaseObjectObservable, FirebaseAuth } from 'angularfire
   
 })
 export class MenuLoginComponent implements OnInit {
-  
-  private loginService:LoginService;
-  
-  constructor(private af:AngularFire, private auth:FirebaseAuth){
 
-    this.loginService= new LoginService(af, auth)
+  
+  constructor(private af:AngularFire, private auth:FirebaseAuth, private loginService:LoginService){
+
+
   }
 
 

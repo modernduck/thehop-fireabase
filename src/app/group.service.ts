@@ -24,7 +24,7 @@ export class GroupService {
 
   
 
- private slugify(text)
+ public slugify(text)
   {
     return text.toString().toLowerCase()
       .replace(/\s+/g, '-')           // Replace spaces with -
@@ -71,7 +71,42 @@ export class GroupService {
   deleteGroup(slug)
   {
     if(this.canSetGroup(slug))
-      this.af.database.object("groups/" + slug).remove();
+    {
+      console.log('delete path: ' + "groups/" + slug + "/members")
+      //remove all_user in group first
+      var sub = this.af.database.object("groups/" + slug + "/members").subscribe(member_list =>{
+        console.log('retrive member_list')
+        console.log(member_list)
+        var count = 0;
+        var doCount =0;
+        for(var key in member_list)
+        {
+         
+          if(key != "$key")
+          {
+             var promise = this.af.database.object('users/' + key + "/group/" + slug).remove()
+            promise.then(_ => {
+              doCount++;
+              if(doCount == count)
+            {
+              sub.unsubscribe()
+              console.log("groups/" + slug)
+              //still error  from not referenceurl
+
+              this.af.database.object("groups/" + slug).remove();
+            }
+              
+              
+            } ).catch(err => console.log(err, 'You dont have access!'));
+            count++;
+          }
+         //   this.af.database.object('users/' + key + "/group/" + slug).remove()
+        }
+        //then remove it self
+       // this.af.database.object("groups/" + slug).remove();
+      })
+      
+    }
   }
 
   addMemberGroup(slug, user_key){

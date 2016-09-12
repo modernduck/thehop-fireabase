@@ -54,13 +54,14 @@ export class GroupFormComponent implements OnInit {
     {
       //just rename
       //and deal with member i guess?
-    
+      this.router.navigate(['group'])
     }else
     {
       this.groupService.createGroup(this.group.name)
       
+      this.router.navigate(['group/', this.groupService.slugify(this.group.name) ])
     }
-    this.router.navigate(['group'])
+    
   }
 
   delete()
