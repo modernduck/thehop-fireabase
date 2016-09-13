@@ -29,16 +29,12 @@ export class LoginService {
 
   private fetchInfo ( uid )
   {
-    console.log('fetch:' + ('users/' + uid) )
+    
     this.info = this.af.database.object('users/' + uid)
     this.info.subscribe(data=>{
-      console.log('done load info')
-      console.log(data) 
+       
       if(typeof data.email == "undefined")
       {
-        console.log('create stuff')
-        //console.log(this.getGoogleInfo(this.user.auth))
-        //this.af.database.object('users/' + uid).set(this.getGoogleInfo(this.user.auth))
         this.userService.setUser(uid, this.userService.getNewGoogleUser(this.user.auth))
         
       }
