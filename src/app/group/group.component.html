@@ -4,10 +4,8 @@
 <div *ngIf="groups | async">
   <ul>
     <li *ngFor="let item of groups | async">
-      <a routerLink="./{{item.$key}}">{{ item.name }} 
-      <span *ngIf="item.members">
-        ( {{(item.members | objectTrue2Array).length}} )
-      </span>
+      <a routerLink="./{{item.$key}}">{{ item.name }} ( {{item.members_count}} ) 
+      
       </a>
     </li>
   </ul>

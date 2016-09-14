@@ -34,11 +34,9 @@
       }
     }
   },
-  "courses_type":
-  {
+  "courses_type": {
     "course":{
       "name":"Course"
-
     },
     "workshop":{
       "name":"Workshop"
@@ -46,7 +44,6 @@
     "camp":{
       "name":"Camp"
     }
-    
   },
   "courses":{
     "LH011473736456423":{
@@ -84,11 +81,6 @@
       "type":{
         "course":true
       }
-
-      
-
-      
-      
     },
     "LH021473736456423":{
       "code":"LH02",

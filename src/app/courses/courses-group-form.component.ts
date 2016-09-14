@@ -6,7 +6,7 @@ const DEFAULT_LIMIT = 10, DEFAULT_NAME = "", DEFAULT_PRICE = 2400
   moduleId: module.id,
   selector: 'courses-group-form',
   template: `
-    <table class='courses-group'>
+    <table class='courses-group' *ngIf="groups.length > 0">
         <thead>
             <th>Name</th>
             <th>Limit</th>
@@ -74,6 +74,7 @@ export class CoursesGroupFormComponent implements OnInit {
           "name":DEFAULT_NAME,
           "limit":DEFAULT_LIMIT,
           "price":DEFAULT_PRICE,
+          "public":true,
           "key":"yo"
           
       }

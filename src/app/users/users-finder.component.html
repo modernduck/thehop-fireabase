@@ -1,8 +1,8 @@
-<section class="users-finder" *ngIf="display">
-    
+<section class="users-finder" *ngIf="display">    
     <div>
         <input type="text" class="form-control" [(ngModel)]="q" (keypress)="onKeyPress($event)"  placeholder="Search for Name / Email / Group" />  
         <div *ngIf="users">
+            
             <table class="table table-striped">
                 <thead>
                     <th>Picture</th>
@@ -20,7 +20,6 @@
                         <td><group-joined-display [groups]="item.group"></group-joined-display></td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
     </div>

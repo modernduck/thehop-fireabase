@@ -14,5 +14,3 @@ export class HighlightDirective {
     this.renderer.setElementStyle(this.el.nativeElement, 'backgroundColor', color);
   }
 }
-
-

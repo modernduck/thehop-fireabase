@@ -39,9 +39,6 @@ export class CoursesSignupButtonComponent implements OnInit {
         }
         
     }
-    console.log('-------x----')
-    console.log(this.group)
-    console.log(this.seat_left)
     if(this.seat_left <= NOTIFY_LIMIT && this.seat_left > 0)
     {
         this.displayButton = this.seat_left + " Left. Signup!"
@@ -49,7 +46,7 @@ export class CoursesSignupButtonComponent implements OnInit {
     }else if(this.seat_left <= 0)
     {
         this.displayButton = "SOLD OUT"
-        this.buttonClass = "btn-inverse"
+        this.buttonClass = "btn-default"
     }
     
 

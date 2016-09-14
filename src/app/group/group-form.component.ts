@@ -10,7 +10,7 @@ import { ActivatedRoute, Params, Router  } from "@angular/router"
   styleUrls: ['group.component.css']
 })
 export class GroupFormComponent implements OnInit {
-  private members
+  private members =[]
   private slug
   private group
   private isNew 
@@ -25,11 +25,14 @@ export class GroupFormComponent implements OnInit {
        this.route.params.forEach((params: Params) => {
           this.slug = params['slug']
           this.isNew = this.slug == "new"
-          if(!this.isNew)
+          if(!this.isNew) {
             this.groupService.getGroup(this.slug).subscribe(group=>{
               this.group = group;
             })
-          else
+            this.groupService.getAllMember(this.slug).subscribe(members => {
+              this.members = members
+            })
+          }else
             this.group = this.groupService.getBlankGroup()
 
         });
@@ -41,6 +44,7 @@ export class GroupFormComponent implements OnInit {
     this.selectedUser = user;
     this.isAddUser = false;
     this.groupService.addMember(this.slug ,user);
+    this.groupService.updateMemberCount(this.slug, this.members.length)
   }
 
   removeUser(user_key)

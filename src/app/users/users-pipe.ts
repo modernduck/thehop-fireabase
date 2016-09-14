@@ -5,11 +5,8 @@ const groupFilter = (users, group) => {
   if(!users)
     return users;
   return users.filter((value, index, arr) =>{
-            
-            if(group)
-            {
+            if(group && group!='')
               return  value.group[group]
-            }
             return true; 
 
           })

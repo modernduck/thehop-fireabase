@@ -9,8 +9,10 @@
             Members 
             
             <ul >    
-                <li *ngFor="let m of (group?.members | objectTrue2Array)">
-                    {{group?.member_names[m.$key]}} <button class="btn btn-danger" (click)="removeUser(m.$key)">X</button>
+                <li *ngFor="let m of members">
+                    
+                    {{m.$value}} <button class="btn btn-danger" (click)="removeUser(m.$key)">X</button>
+                    
                 </li>
                 <li><a (click)="isAddUser=true">Add Member</a></li>
             </ul>

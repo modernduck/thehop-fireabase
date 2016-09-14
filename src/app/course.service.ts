@@ -3,7 +3,7 @@ import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 
 
 const DAY_OBJECT = {"mon":2, "tue":3, "wed":5, "thu":7, "fri":11, "sat":13, "sun":17}
-
+const TYPE_PATH = "courses_type/"
 const ROOT_PATH = "courses"
 
 
@@ -27,6 +27,11 @@ export class CourseService {
   getAllCourses(){
     
     return this.af.database.list(ROOT_PATH)
+  }
+
+  getAllType()
+  {
+    return this.af.database.list(TYPE_PATH)
   }
 
   getCourse(key)
