@@ -74,7 +74,7 @@ export class UserService {
 
   public getUserNickname(user_key)
   {
-    console.log('user_key: ' + user_key)
+    //console.log('user_key: ' + user_key)
     return this.af.database.object('users/' + user_key + '/nickname')
   }
 

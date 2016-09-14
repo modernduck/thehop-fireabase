@@ -15,49 +15,150 @@
           }
       }
   },
+  "courses_group": {
+    "LH011473736456423":{
+
+      "lead":{
+        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
+      },
+      "follow":{
+
+      }
+    },
+    "LH021473736456423" : {
+      "lead":{
+        
+      },
+      "follow":{
+
+      }
+    }
+  },
+  "courses_type":
+  {
+    "course":{
+      "name":"Course"
+
+    },
+    "workshop":{
+      "name":"Workshop"
+    },
+    "camp":{
+      "name":"Camp"
+    }
+    
+  },
   "courses":{
-    "LH001":{
+    "LH011473736456423":{
       "code":"LH01",
       "name":"Beginner Lindy Hop",
-      
+      "start_time":"13.00",
+      "end_time":"14.00",
+      "start_date":"2016-09-21",
+      "end_date":"2016-10-31",
+      "description":"",
+      "exclude":{
+
+      },
+      "require":{
+
+      },
+      "days": 13,
       "group":{
-        "lindyhop":true
+        "lead":{
+          "name":"Lead",
+          "limit":10,
+          "price":2400,
+          "public":true
+         },
+        "follow":{
+          "name":"Follow",
+          "limit":10,
+          "price":2400,
+          "public":true
+         }
+      },
+      "teacher": {
+        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
+      },
+      "type":{
+        "course":true
+      }
+
+      
+
+      
+      
+    },
+    "LH021473736456423":{
+      "code":"LH02",
+      "name":"Lindy Hop Level 2",
+      "start_time":"13.00",
+      "end_time":"17.00",
+      "start_date":"2016-09-21",
+      "end_date":"2016-10-31",
+      "exclude":{
+        "newbie":true
+      },
+      "require":{
+
+      },
+      "days": 13,
+      "group":{
+        "lead":{
+          "name":"Lead",
+          "limit":0,
+          "price":2400,
+          "public":true
+         },
+        "follow":{
+          "name":"Follow",
+          "limit":2,
+          "price":2400,
+          "public":true
+         }
+      },
+      "teacher":{
+        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
+      },
+      "type":{
+        "course":true
       }
     }
   },
   "users_complete_courses":{
       "hlCJ4pmv09f5aoHk73X08cWaxcn2":{
-        "LH001":true
+        "LH0011473736456423":true
       }
   },
-  
+  "group_members":
+  {
+    "admin":{
+      "hlCJ4pmv09f5aoHk73X08cWaxcn2":"Pop(!)"
+    }
+
+  },
+
   "groups":{
     "admin":{
       "name":"Admin",
-      "members":{
-        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
-      },
-      "member_names":{
-        "hlCJ4pmv09f5aoHk73X08cWaxcn2":"Pop(!)"
-      }
+      "members_count":1
     },
     "teacher":{
       "name":"Teacher",
-      "members":{
-        
-      }
+      "members_count":0
     },
     "banking":{
       "name":"Banking",
-      "membere":{
-        
-      }
+       "members_count":0
     },
     "newbie":{
       "name":"Newbies",
-      "members":{
-        
-      }
+       "members_count":0
+    },
+    "chalreston-level-1":{
+      "name":"Chalreston Level 1",
+       "members_count":0
     }
 
   

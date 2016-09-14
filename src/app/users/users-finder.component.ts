@@ -17,6 +17,9 @@ export class UsersFinderComponent implements OnInit {
   @Input()
   display
 
+  @Input()
+  group
+
   @Output()
   onSelected = new EventEmitter<any>();
 
@@ -28,7 +31,11 @@ export class UsersFinderComponent implements OnInit {
      this.users = this.userService.getAllUser()
      if(typeof this.display == "undefined")
         this.display = true;
-      console.log(this.display)
+
+     if(typeof this.group == "undefined")
+        this.group = "";
+    
+      
   }
 
   select(user)

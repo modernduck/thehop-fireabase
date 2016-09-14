@@ -1,4 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
+
+const groupFilter = (users, group) => {
+  if(!users)
+    return users;
+  return users.filter((value, index, arr) =>{
+            
+            if(group)
+            {
+              return  value.group[group]
+            }
+            return true; 
+
+          })
+}
 /*
  * Transform object to list of array
  * Usage:
@@ -27,15 +42,7 @@ export class FilterByUserAttributePipe implements PipeTransform {
           }));
         })
        //seach for group
-        result_search.push(users.filter((value, index, arr) =>{
-            
-            if(query)
-            {
-              return  value.group[query]
-            }
-            return true; 
-
-          }))
+        result_search.push(groupFilter(users, query))
         var keys={};
         var result=[];
         result_search.forEach(search_result=>{
@@ -61,3 +68,13 @@ export class FilterByUserAttributePipe implements PipeTransform {
   }
 }
 
+
+@Pipe({name: 'filterByUserGroup'})
+export class FilterByUserGroupPipe implements PipeTransform {
+  transform(users:Array<any> , group:string): any{
+    if(group!="") {
+      return groupFilter(users, group)
+    }else
+      return users;
+  }
+}

@@ -2,7 +2,7 @@ import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent, LogoutComponent }      from './login';
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { CoursesComponent } from "./courses/courses.component";
+import { CoursesComponent, CoursesFormComponent } from "./courses";
 import { GroupComponent, GroupFormComponent } from "./group"
 
 const appRoutes: Routes = [
@@ -38,7 +38,12 @@ const appRoutes: Routes = [
   {
     path:'courses',
     component: CoursesComponent
+  },
+  {
+    path:'courses/:key',
+    component: CoursesFormComponent
   }
+
 
 ];
 

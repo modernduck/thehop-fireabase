@@ -34,6 +34,11 @@ export class GroupService {
       .replace(/-+$/, '');            // Trim - from end of text
   }
 
+  getGroupName(slug)
+  {
+    return this.af.database.object("groups/" + slug + "/name")
+  }
+
   getBlankGroup()
   {
     return {

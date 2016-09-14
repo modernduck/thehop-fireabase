@@ -4,19 +4,22 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode, NgModule, Renderer } from '@angular/core';
 import { AppComponent }  from './app.component';
 import { LoginComponent, LogoutComponent } from "./login"
-import { CoursesComponent } from './courses/courses.component'
+import { CoursesComponent, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, CoursesGroupFormComponent, CoursesDayFormComponent } from './courses'
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { GroupComponent, GroupFormComponent,GroupJoinedDisplayComponent } from "./group"
+import { GroupComponent, GroupFormComponent,GroupJoinedDisplayComponent,  GroupFinderComponent } from "./group"
 import { MenuComponent, MenuLoginComponent } from "./menu/"
-import { UsersFinderComponent, FilterByUserAttributePipe } from "./users"
+import { UsersFinderComponent, FilterByUserAttributePipe, FilterByUserGroupPipe } from "./users"
 import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
 import { LoginService } from "./login.service"
 import { UploadService } from "./upload.service"
 import { UserService } from "./user.service"
 import { GroupService } from "./group.service"
+import { CourseService } from "./course.service"
 import { routing } from './app.routing';
 import { Object2ArrayPipe, ObjectTrue2ArrayPipe, FilterByAttributePipe } from "./app.pipe"
 
+//directives
+import { HighlightDirective } from "./app.directives"
 
 // Must export the config
 export const firebaseConfig = {
@@ -46,9 +49,10 @@ const myFirebaseAuthConfig = {
     UploadService,
     Renderer,
     UserService,
-    GroupService
+    GroupService,
+    CourseService
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, FilterByUserGroupPipe, CoursesGroupFormComponent, HighlightDirective, CoursesDayFormComponent, GroupFinderComponent ],
   bootstrap: [ AppComponent,
      
      

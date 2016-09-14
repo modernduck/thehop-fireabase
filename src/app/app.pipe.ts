@@ -56,13 +56,15 @@ export class ObjectTrue2ArrayPipe implements PipeTransform {
 @Pipe({name: 'filterByAttribute'})
 export class FilterByAttributePipe implements PipeTransform {
   transform(input_array:Array<any>, attribute_name:string , attribute_value:string): any{
-      //
+      
       if(input_array)
         return input_array.filter((value, index, arr) =>{
-            if(value[attribute_name] && attribute_value)
+            if( value != null && value[attribute_name] && attribute_value)
             {
+              
               return  value[attribute_name].toLowerCase().indexOf(attribute_value.toLowerCase()) >= 0
             }
+
           return true; 
 
         })
