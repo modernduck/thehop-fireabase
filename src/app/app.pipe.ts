@@ -2,10 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 /*
  * Transform object to list of array
  * Usage:
- *   obj | object2Array:exponent
+ *   obj | object2Array
  * Example:
- *   {{ { "A":true, "B":true } |  exponentialStrength:10}}
- *   formats to: [ {"A":true}, {"B:true} ]
+ *   {{ { "A":{....}, "B":{....} }}
+ *   formats to: [ {$key:"A", ....}, {$key:"B", .... } ]
 */
 @Pipe({name: 'object2Array'})
 export class Object2ArrayPipe implements PipeTransform {
@@ -15,7 +15,9 @@ export class Object2ArrayPipe implements PipeTransform {
       for(var key in obj)
       {
           var tmp={}
-          tmp[key] = obj[key]
+          tmp["$key"] = key;
+          for(var k in obj[key])
+            tmp[k] = obj[key][k]
           
           result.push(tmp)
       }
@@ -23,6 +25,7 @@ export class Object2ArrayPipe implements PipeTransform {
     //return Math.pow(value, isNaN(exp) ? 1 : exp);
   }
 }
+
 
 @Pipe({name: 'objectTrue2Array'})
 export class ObjectTrue2ArrayPipe implements PipeTransform {
@@ -59,11 +62,11 @@ export class FilterByAttributePipe implements PipeTransform {
       
       if(input_array)
         return input_array.filter((value, index, arr) =>{
-            if( value != null && value[attribute_name] && attribute_value)
-            {
-              
+          
+            if( value != null && value[attribute_name] && attribute_value && typeof value[attribute_name] == "string")   
               return  value[attribute_name].toLowerCase().indexOf(attribute_value.toLowerCase()) >= 0
-            }
+            else if((typeof value[attribute_name] == "boolean" || typeof value[attribute_name] == "number") )
+              return value[attribute_name] == attribute_value
 
           return true; 
 

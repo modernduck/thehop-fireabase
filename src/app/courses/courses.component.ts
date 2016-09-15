@@ -9,14 +9,18 @@ import { LoginService } from "../login.service"
   styleUrls: ['courses.component.css']
 })
 export class CoursesComponent implements OnInit {
-  private courses;
+  private courses = [];
   private currentGroup;
+  private user;
   private ckeditorContent;
   constructor(private courseService:CourseService, private lg:LoginService) { }
 
   ngOnInit() {
-    this.courses = this.courseService.getAllCourses()
+     this.courseService.getAllCourses().subscribe(data => {
+       this.courses = data
+     })
     this.lg.getCurrentUser(user=>{
+      this.user = user;
       this.currentGroup = user.group
     })
   }

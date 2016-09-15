@@ -9,7 +9,8 @@ const require_rules = {
   "date": ["start_date", "end_date"],//check if format yyyy-mm-dd => not empty
   "time": ["start_time", "end_time"],//chck if format hh:mm:ss => not empty
   "days": ["days"],
-  "object" : ["group", "teacher", "type"] // at least have one key
+  "object" : ["group", "teacher", "type"] ,// at least have one key
+  "boolean" : ["public"]
 }
 const cloneObject = (obj) =>{
   var _obj = {};
@@ -111,6 +112,12 @@ export class CoursesFormComponent implements OnInit {
                 this.require_fields.push(field_name)
             })
 
+          break;
+        case "booelean":
+           require_rules[rule_key].forEach( field_name => {
+              if(!(this.course[field_name] && typeof(this.course[field_name]) == "boolean"))
+                this.require_fields.push(field_name)
+           });
           break;
         default:
           break;

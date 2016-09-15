@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 
-
 const DAY_OBJECT = {"mon":2, "tue":3, "wed":5, "thu":7, "fri":11, "sat":13, "sun":17}
 const TYPE_PATH = "courses_type/"
 const ROOT_PATH = "courses"
@@ -22,6 +21,19 @@ export class CourseService {
 
   constructor(private af:AngularFire) {
 
+   }
+
+   public static canJoin(course, user) {
+     //check exclude
+    for(var key in course.exclude)
+      if(user.group[key] === true)
+        return false;
+     var result = true;
+     //check require
+     for(var key in course.require)
+      if(!user.group[key] || user.group[key] != true)
+        return false;
+      return true;
    }
 
   getAllCourses(){
@@ -59,7 +71,8 @@ export class CourseService {
       start_date:"",
       end_date:"",
       days:1,
-      teacher:{}
+      teacher:{},
+      public:true,
 
     }
   }

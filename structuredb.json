@@ -45,12 +45,14 @@
       "name":"Camp"
     }
   },
+  
   "courses":{
     "LH011473736456423":{
+      "public":true,
       "code":"LH01",
       "name":"Beginner Lindy Hop",
-      "start_time":"13.00",
-      "end_time":"14.00",
+      "start_time":"13:00:00",
+      "end_time":"14:00:00",
       "start_date":"2016-09-21",
       "end_date":"2016-10-31",
       "description":"",
@@ -83,10 +85,11 @@
       }
     },
     "LH021473736456423":{
+      "public":true,
       "code":"LH02",
       "name":"Lindy Hop Level 2",
-      "start_time":"13.00",
-      "end_time":"17.00",
+      "start_time":"13:00:00",
+      "end_time":"17:00:00",
       "start_date":"2016-09-21",
       "end_date":"2016-10-31",
       "exclude":{

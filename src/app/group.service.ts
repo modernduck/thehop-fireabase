@@ -69,10 +69,7 @@ export class GroupService {
   createGroup(name)
   {
     var key_name =  this.slugify(name);
-    /*var saveObject = {
-      "name":name,
-      "members":{}
-    }*/
+    
     var saveObject = {
       'name':name,
       "member_count":0
@@ -84,33 +81,6 @@ export class GroupService {
   {
     this.af.database.object(ROOT_PATH + slug).remove();
     this.af.database.object(MEMBER_PATH + slug ).remove();
-
-
-    /*if(this.canSetGroup(slug)) {
-      //remove all_user in group first
-      var sub = this.af.database.object(ROOT_PATH + slug + "/members").subscribe(member_list =>{
-        var count = 0;
-        var doCount =0;
-        for(var key in member_list) {
-          if(key != "$key") {
-              var promise = this.af.database.object('users/' + key + "/group/" + slug).remove()
-              promise.then(_ => {
-                doCount++;
-                if(doCount == count)
-                {
-                  sub.unsubscribe()
-                  console.log("groups/" + slug)
-
-                  this.af.database.object("groups/" + slug).remove();
-                }
-
-              } ).catch(err => console.log(err, 'You dont have access!'));
-            count++;
-          }
-        }
-      })
-      
-    }*/
   }
   
   getAllMember(slug:string)
@@ -120,17 +90,9 @@ export class GroupService {
 
   addMember(slug:string, user)
   {
-    //user.$key = usekey
-    //this.af.database.object("groups/" + slug + "/members/" + user.$key).set(true)
-    //this.af.database.object("groups/" + slug + "/member_names/" + user.$key).set(user.nickname)
-   
-    //add group in that user too
-    //this.af.database.object("users/" + user.$key + "/group/" + slug).set(true);
-
-    //add user
      this.af.database.object(MEMBER_PATH + slug + "/" + user.$key).set(user.nickname)
      this.af.database.object("users/" + user.$key + "/group/" + slug).set(true);
-     //update counter
+   
      
   }
 

@@ -2,8 +2,9 @@ import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent, LogoutComponent }      from './login';
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { CoursesComponent, CoursesFormComponent } from "./courses";
+import { CoursesComponent, CoursesFormComponent, CoursesDetailComponent } from "./courses";
 import { GroupComponent, GroupFormComponent } from "./group"
+import { CheckoutComponent } from "./checkout"
 
 const appRoutes: Routes = [
   {
@@ -41,7 +42,15 @@ const appRoutes: Routes = [
   },
   {
     path:'courses/:key',
+    component: CoursesDetailComponent
+  },
+  {
+    path:'courses/edit/:key',
     component: CoursesFormComponent
+  },
+  {
+    path:"checkout",
+    component:CheckoutComponent
   }
 
 

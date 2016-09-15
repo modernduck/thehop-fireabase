@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} from 'angularfire2';
 
-
+const MEMBER_GROUP_PATH="group_members/"
+const ROOT_PATH = "users/"
 @Injectable()
 export class UserService {
 
@@ -38,11 +39,10 @@ export class UserService {
       if( user.group[group_name] === true)
       {
 
-        this.af.database.object('groups/' + group_name + '/members/' + user_key).set(true)
-        this.af.database.object('groups/' + group_name + '/member_names/' + user_key).set(user.nickname)
+        this.af.database.object(MEMBER_GROUP_PATH + user_key).set(user.nickname)
       }else
       {
-        this.af.database.object('groups/' + group_name + '/members/' + user_key).set(false)
+        this.af.database.object(MEMBER_GROUP_PATH + user_key).remove()
       }
     }
 
