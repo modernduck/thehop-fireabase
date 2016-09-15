@@ -2,6 +2,67 @@
   "test" : {
     "name" : "yox"
   },
+  "payment_types":{
+      "transfer" : {
+          "name": "Transfer",
+          "account":"02123456789",
+          "account_holder":"Sompop Kulapalanont",
+          "provider":"SCB",//like bank
+          "procedure":"Transfer the money please<b>eiei</b>",
+          "fee": { //constant 10, percent 3 = > 10 + 3%
+            "constant": 0,
+            "percentage": 0
+          },
+          "active":true
+      },
+      "cash": {
+           "name": "Cash",
+            "procedure":"Walk at the hop and pay but need to pay more",
+            "fee": { //constant 10, percent 3 = > 10 + 3%
+              "constant": 100,
+              "percentage": 0
+            },
+            "active":true
+      },
+      "paypal": {
+          "name": "Paypal",
+          "account":"sompop.kulapalanont@gmail.com",
+          "account_holder":"Sompop Kulapalanont",
+          "provider":"Paypal",//like bank
+          "procedure":"Transfer the money please<b>eiei</b>",
+          "fee": { //constant 10, percent 3 = > 10 + 3%
+            "constant": 0,
+            "percentage": 0
+          },
+          "active":false
+      }
+  },
+  "payment_order":{
+      "hlCJ4pmv09f5aoHk73X08cWaxcn2.1473736456423":{
+        "LH011473736456423.follow": {
+            "unit_price":2400,
+            "quantity":1
+        }
+
+      }
+  },
+  "payment_transactions_status":{
+    "waiting": "Waiting for user to transfer already block the slot (-limit)",
+    "uploaded": "Waiting for user to confirm already block the slot (-limit)",
+    "complete": "already confirm ready to go",
+    "cancel": "return slot to the all courese (+limit)"
+  },
+  "payment_transactions":{
+      //$userkey.timestamp
+      "hlCJ4pmv09f5aoHk73X08cWaxcn2.1473736456423": {
+          "total":2400,
+          "fee":0,
+          "discount":0,
+          "payment_type":"transfer",
+          "payment_slip":"http://google.com/img.jpg",
+          "status":"uploaded"
+      }
+  },
   "users":{
     "hlCJ4pmv09f5aoHk73X08cWaxcn2":{
           "email":"sompop.kulpalanont@gmail.com",
@@ -119,6 +180,12 @@
       "type":{
         "course":true
       }
+    }
+  },
+  "users_waiting_approve_courses":{
+    "LH021473736456423":{
+        "studentKey":true,
+        "hlCJ4pmv09f5aoHk73X08cWaxcn2":true
     }
   },
   "users_complete_courses":{
