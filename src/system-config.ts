@@ -51,6 +51,7 @@ const barrels: string[] = [
   'app/group',
   'app/users',
   'app/checkout',
+  'app/notifications',
   /** @cli-barrel */
 ];
 

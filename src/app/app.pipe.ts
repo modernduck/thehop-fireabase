@@ -9,8 +9,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 */
 @Pipe({name: 'object2Array'})
 export class Object2ArrayPipe implements PipeTransform {
-  transform(obj): any{
-      //
+  transform(obj ): any{
+    //check if it's null value
+    if(obj != null && typeof(obj.$value) != "undefined" && obj.$value == null)
+     return [];
       var result = [];
       for(var key in obj)
       {
@@ -18,11 +20,11 @@ export class Object2ArrayPipe implements PipeTransform {
           tmp["$key"] = key;
           for(var k in obj[key])
             tmp[k] = obj[key][k]
-          
-          result.push(tmp)
+          if(key != "$key")//dont include key
+            result.push(tmp)
       }
       return result;
-    //return Math.pow(value, isNaN(exp) ? 1 : exp);
+    
   }
 }
 

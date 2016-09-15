@@ -10,6 +10,7 @@ import { GroupComponent, GroupFormComponent,GroupJoinedDisplayComponent,  GroupF
 import { MenuComponent, MenuLoginComponent } from "./menu/"
 import { UsersFinderComponent, FilterByUserAttributePipe, FilterByUserGroupPipe } from "./users"
 import { CheckoutComponent, CheckoutBarComponent } from "./checkout"
+import { NotificationsComponent } from "./notifications"
 import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
 import { LoginService } from "./login.service"
 import { UploadService } from "./upload.service"
@@ -17,6 +18,7 @@ import { UserService } from "./user.service"
 import { GroupService } from "./group.service"
 import { CourseService } from "./course.service"
 import { CartService } from "./cart.service"
+import { NotificationsService } from  "./notifications.service"
 import { routing } from './app.routing';
 import { Object2ArrayPipe, ObjectTrue2ArrayPipe, FilterByAttributePipe } from "./app.pipe"
 
@@ -53,9 +55,10 @@ const myFirebaseAuthConfig = {
     UserService,
     GroupService,
     CourseService,
-    CartService
+    CartService,
+    NotificationsService
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, FilterByUserGroupPipe, CoursesGroupFormComponent, HighlightDirective, CoursesDayFormComponent, GroupFinderComponent, CourseTypeComponent,CoursesDetailComponent, CheckoutComponent, CheckoutBarComponent ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, FilterByUserGroupPipe, CoursesGroupFormComponent, HighlightDirective, CoursesDayFormComponent, GroupFinderComponent, CourseTypeComponent,CoursesDetailComponent, CheckoutComponent, CheckoutBarComponent, NotificationsComponent ],
   bootstrap: [ AppComponent,
      
      

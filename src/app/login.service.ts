@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} from 'angularfire2';
 
 import { UserService } from './user.service'
-
+import { PromiseUser } from "./model/promise-user"
+const ROOT_PATH = 'users/'
+const ROOT_NOTIFCATION_PATH = 'notifications/'
 @Injectable()
 export class LoginService {
 
@@ -11,6 +13,7 @@ export class LoginService {
   _isLogin = false;
   _callbackSuccess:any;
   public currentUserKey;
+  public promiseUser:Promise<PromiseUser>
   public test = "yo"
   public currentUser:FirebaseObjectObservable<any> = null;
   
@@ -45,22 +48,33 @@ export class LoginService {
 
   constructor(private af: AngularFire,public auth: FirebaseAuth, private userService:UserService) {
     //this.info = this.af.database.object('users/hlCJ4pmv09f5aoHk73X08cWaxcn2')
-    
-    
-    this.af.auth.subscribe(user=>{
-      
-      if(user)
-      {
-        this.user = user;
-        this.currentUserKey = this.user.uid
-        this._isLogin = true;
-        this.currentUser =this.userService.getUser(this.user.uid)
-        this.fetchInfo(user.uid)
-      }else
-      {
-        this._isLogin = false;
-      }
+    this.promiseUser = new Promise<PromiseUser>((resolve, reject) =>{
+      this.af.auth.subscribe(user=>{
+          
+          if(user)
+          {
+            this.user = user;
+            this.currentUserKey = this.user.uid
+            this._isLogin = true;
+            
+            var currentUser:FirebaseObjectObservable<any> = this.af.database.object(ROOT_PATH);
+            var currentUserNotification:FirebaseObjectObservable<any> = this.af.database.object(ROOT_NOTIFCATION_PATH + this.currentUserKey);
+            resolve(new PromiseUser(currentUser, currentUserNotification, this.currentUserKey))
+            //new PromiseUser(this.af.database.object(ROOT_PATH), this.af.database.list(ROOT_NOTIFCATION_PATH + this.currentUserKey), this.currentUserKey)
+
+            this.currentUser =this.userService.getUser(this.user.uid)
+            this.fetchInfo(user.uid)
+          }else
+          {
+
+            this._isLogin = false;
+            reject(user)
+          }
+          //this.af.auth.unsubscribe()
+        })
     })
+   
+    
    }
   login(){
      this.auth.login();
@@ -83,6 +97,7 @@ export class LoginService {
           callback(data)
         })
       }
+    //  this.af.auth.unsubscribe()
     });
      
 
