@@ -1,22 +1,41 @@
+const REQUEST_NOTIFICATION = 1;
+const REPORT_NOTIFICATION = 2
+import { NotificationMessages } from "../messages/notification" 
 export class Notification{
-
-    private _data;
-    constructor(notification:any){
-        this._data = notification;
+    filter:string;
+    parameter:any;
+    href:string;
+    private $key:string;
+    
+    constructor(filter:string, parameter:any, href:string, $key?:any){
+        this.filter = filter;
+        this.parameter = parameter;
+        this.href = href;
+        if(typeof $key == "string" && $key)
+            this.$key = $key
+        else
+            this.$key = new Date().getTime()+""
     }
 
-    toArray():Array<any> {
-        var arr = []
-        if(typeof this._data['$value'] !='undefined' )
-            return arr;
-        for(var key in this._data) {
-            if(key != "$key")
-            {
-                this._data[key].$key = key
-                arr.push(this._data[key])
-            }
+    public static load(data){
+        return new Notification(data.filter, data.parameter, data.href, data.$key)
+    }
+
+    public getMessage(){
+        return NotificationMessages.get(this.filter, this.parameter)
+    }
+
+    public getKey()
+    {
+        return this.$key;
+    }
+
+    public getData(){
+        return {
+            filter:this.filter,
+            parameter:this.parameter,
+            href:this.href
         }
-        return arr;
     }
 
 }

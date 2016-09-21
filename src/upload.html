@@ -46,7 +46,11 @@
         if(QueryString.url)
             root_img = QueryString.url
         // Upload file and metadata to the object 'images/mountains.jpg'
-        var uploadTask = storageRef.child(root_img + file.name).put(file, metadata);
+        var uploadTask;
+        if( QueryString.file_name )
+            uploadTask = storageRef.child(root_img + QueryString.file_name).put(file, metadata);
+        else
+            uploadTask = storageRef.child(root_img + file.name).put(file, metadata);
 
         // Listen for state changes, errors, and completion of the upload.
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
@@ -100,6 +104,7 @@
   function upload()
   {
       var selectedFile = document.getElementById('input').files[0];
+
       uploadFile(selectedFile)
   }
 

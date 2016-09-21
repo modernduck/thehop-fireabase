@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/test-db
 
 # dependencies
 /node_modules

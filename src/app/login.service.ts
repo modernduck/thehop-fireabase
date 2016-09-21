@@ -68,11 +68,14 @@ export class LoginService {
           {
 
             this._isLogin = false;
-            reject(user)
+        
+           
           }
           //this.af.auth.unsubscribe()
         })
+        
     })
+    
    
     
    }

@@ -13,6 +13,7 @@ export class CoursesComponent implements OnInit {
   private currentGroup;
   private user;
   private ckeditorContent;
+  private enroll_course;
   constructor(private courseService:CourseService, private lg:LoginService) { }
 
   ngOnInit() {
@@ -22,6 +23,11 @@ export class CoursesComponent implements OnInit {
     this.lg.getCurrentUser(user=>{
       this.user = user;
       this.currentGroup = user.group
+      this.courseService.getEnrollCourses(user.$key).subscribe(courses=>{
+        console.log(courses)
+        this.enroll_course = courses;
+      })
+      //console.log(user.$key)
     })
   }
 

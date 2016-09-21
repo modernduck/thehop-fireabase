@@ -2,10 +2,10 @@ import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent, LogoutComponent }      from './login';
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { CoursesComponent, CoursesFormComponent, CoursesDetailComponent } from "./courses";
+import { CoursesComponent, CoursesFormComponent, CoursesDetailComponent, CoursesApproveComponent } from "./courses";
 import { GroupComponent, GroupFormComponent } from "./group"
 import { CheckoutComponent } from "./checkout"
-
+import { PaymentsMethodComponent, PaymentsTransferComponent,PaymentsThankyouComponent, PaymentsComponent, PaymentsListComponent, PaymentsDetailComponent } from "./payments"
 const appRoutes: Routes = [
   {
     path:'',
@@ -41,19 +41,47 @@ const appRoutes: Routes = [
     component: CoursesComponent
   },
   {
-    path:'courses/:key',
-    component: CoursesDetailComponent
-  },
-  {
     path:'courses/edit/:key',
     component: CoursesFormComponent
   },
   {
+    path:'courses/approve/:key',
+    component: CoursesApproveComponent
+  },
+  {
+    path:'courses/:key',
+    component: CoursesDetailComponent
+  },
+  {
     path:"checkout",
     component:CheckoutComponent
+  },
+  {
+    path:"payment",
+    component:PaymentsComponent
+  },
+  {
+    path:"payment/list",
+    component:PaymentsListComponent
+  },
+  {
+    path:"payment/list/:user_key/:time_key",
+    component:PaymentsDetailComponent
+  },
+  {
+    path:"payment/new",
+    component:PaymentsMethodComponent
+  },
+  {
+    path:"payment/transfer",
+    component:PaymentsTransferComponent
+  },
+  {
+    path:"payment/:type/thankyou",
+    component:PaymentsThankyouComponent
   }
 
-
+//PaymentsListComponent
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

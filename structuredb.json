@@ -8,7 +8,12 @@
             "filter":"approve",
             "message":"Your registration have been approved",
             "href":"/courses/LH021473736456423"
-        }
+         },
+         "1473952511533":{
+            "filter":"approve",
+            "message":"Your registration have been approved2",
+            "href":"/courses/LH021473736456423"
+         }
       }
   },
   "payment_types":{

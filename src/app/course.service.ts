@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import { NotificationsService } from "./notifications.service"
+import { Notification } from "./model/notification"
 
 const DAY_OBJECT = {"mon":2, "tue":3, "wed":5, "thu":7, "fri":11, "sat":13, "sun":17}
 const TYPE_PATH = "courses_type/"
 const ROOT_PATH = "courses"
-
-
+const APPROVE_PATH = "users_waiting_approve_courses/"
+const USER_PATH = "users/"
+const USER_ENROLL_PATH = "users_enroll_courses/"
 @Injectable()
 export class CourseService {
 
@@ -19,7 +22,7 @@ export class CourseService {
       .replace(/-+$/, '');            // Trim - from end of text
   }
 
-  constructor(private af:AngularFire) {
+  constructor(private af:AngularFire, private ns:NotificationsService) {
 
    }
 
@@ -45,6 +48,74 @@ export class CourseService {
   {
     return this.af.database.list(TYPE_PATH)
   }
+
+  getAllUnapproveStudent(key)
+  {
+    return this.af.database.list(APPROVE_PATH + key)
+  }
+
+  requestToJoin(course, student){
+    console.log(course)
+    console.log(student)
+    var require= {};
+    for(var require_group in course.require)
+      if(!student.group[require_group])
+        require[require_group] = true;
+    var exclude = {}
+    for(var exclude_group in course.exclude)
+      if(student.group[exclude_group])
+        exclude[exclude_group] = true;
+    console.log('watch require and exclude')
+    console.log(require)
+    console.log(exclude)
+    //get require
+    this.af.database.object(APPROVE_PATH + course.$key + "/" + student.$key).set({
+            "require":require,
+            "exclude":exclude,
+            "name":student.nickname 
+    })
+    //notify all teacher in the course
+    for(var teacher_key in course.teacher)
+      this.ns.send(teacher_key, new Notification("request_course", {
+          student_name:student.nickname,
+          course_name:course.name
+      },  "courses/approve/" + course.$key ))
+  }
+
+  approveStudent(course_key, student_key, require, exclude)
+  {
+    //remove student from group
+    this.af.database.object(APPROVE_PATH + course_key + "/" + student_key).remove()
+    //add student in require if got any
+    var student_group = {}
+    if(require){
+      for(var group_name in require)
+        student_group[group_name] = true;
+    }
+    if(exclude){
+      for(var group_name in exclude)
+        student_group[group_name] = false;
+    }
+    
+    
+    this.af.database.object(USER_PATH + student_key + "/group").update(student_group)
+    //send notification
+    this.ns.send(student_key, new Notification("approved_course", {
+      course_name:course_key
+    }, "/courses/" + course_key))
+  }
+
+  denialStudent(course_key, student_key, require, exclude)
+  {
+    this.af.database.object(APPROVE_PATH + course_key + "/" + student_key).remove()
+    this.ns.send(student_key, new Notification("denied_course", {
+      course_name:course_key
+    }, "/courses/" + course_key))
+    
+
+  }
+
+  
 
   getCourse(key)
   {
@@ -75,6 +146,10 @@ export class CourseService {
       public:true,
 
     }
+  }
+
+  getEnrollCourses(user_key:string){
+    return this.af.database.object(USER_ENROLL_PATH + user_key)
   }
 
   public static daysToObject(days_number) {

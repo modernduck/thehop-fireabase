@@ -1,14 +1,11 @@
 {
-      "hlCJ4pmv09f5aoHk73X08cWaxcn2":{
-          "1473952511532":{
-            "filter":"approve",
-            "message":"Your registration have been approved",
-            "href":"/courses/LH021473736456423"
-         },
-         "1473952511533":{
-            "filter":"approve",
-            "message":"Your registration have been approved2",
-            "href":"/courses/LH021473736456423"
-         }
+  "63TkOjkErSbMvpVa9fVkWLYm8jr2" : {
+    "1473984111559" : {
+      "filter" : "approved_course",
+      "href" : "/courses/LH021473736456423",
+      "parameter" : {
+        "course_name" : "LH021473736456423"
       }
+    }
   }
+}

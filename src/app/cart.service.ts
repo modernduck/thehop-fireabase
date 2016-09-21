@@ -3,6 +3,7 @@ import { Cart } from "./model/cart"
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import { CartItem } from "./model/cart-item"
 import { Observable }     from 'rxjs/Observable'
+import { PaymentOrder } from "./model/payment-order"
 /*
 * Local Service use for store what user is bought
 */
@@ -13,11 +14,12 @@ export class CartService {
 
   private cart:Cart;
   public cart_promise:Promise<Cart>  
-
+  private callbacks:Array<Function>
   private loadEvent
 
   constructor(private af:AngularFire) { 
     var load_cart
+    this.callbacks = [];
     if(localStorage[LOCAL_STORAGE_NAME])
     {
       this.cart = Cart.load(localStorage[LOCAL_STORAGE_NAME])
@@ -28,6 +30,7 @@ export class CartService {
     }else{
       this.cart = new Cart();
     }
+    
     
   }
   //check if item in cart still available or price have been chagne or not
@@ -51,6 +54,19 @@ export class CartService {
       return false;
   }
 
+  private runAllCallback()
+  {
+    this.callbacks.forEach(cb =>{
+      cb(this.cart)
+    });
+  }
+
+  subcribe(callback: (cart:any) => any ){
+    this.callbacks.push(callback)
+    //run the first time u subcribe too
+    this.runAllCallback();
+  }
+
   getCart() {
     return this.cart.getCart();
   }
@@ -61,6 +77,7 @@ export class CartService {
 
   saveCart() {
     localStorage[LOCAL_STORAGE_NAME] = this.cart.toString()
+    this.runAllCallback();
   }
 
   addCourseToCart(course, class_group){
@@ -80,6 +97,12 @@ export class CartService {
   clearCart(){
     this.cart = new Cart();
     this.saveCart();
+  }
+
+  getPaymentOrder(){
+    var payment_order = new PaymentOrder(this.getCart())
+    return payment_order.getData()
+    
   }
 
 

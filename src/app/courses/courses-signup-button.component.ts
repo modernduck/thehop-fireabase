@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CourseService } from "../course.service"
 import { CartService } from "../cart.service"
 const NOTIFY_LIMIT = 5
@@ -16,13 +16,13 @@ const NOTIFY_LIMIT = 5
   `,
   styleUrls: ['courses.component.css']
 })
-export class CoursesSignupButtonComponent implements OnInit {
+export class CoursesSignupButtonComponent implements OnChanges {
   
   @Input()
   course
 
-  
-  
+  @Input()
+  enroll
    
   constructor(private courseService:CourseService, private cartService:CartService) { }
 
@@ -32,7 +32,8 @@ export class CoursesSignupButtonComponent implements OnInit {
   private full_group=[]
   private group
   private isAdded = false;
-  ngOnInit(){
+  
+  ngOnChanges(changes:SimpleChanges){
   //ngOnChanges(changes:SimpleChanges){
     this.group = this.course.group
     for(var g in this.group){
@@ -44,8 +45,9 @@ export class CoursesSignupButtonComponent implements OnInit {
         }
         
     }
-    this.isAdded = this.cartService.isAddCourse(this.course["$key"]) 
-    
+    this.isAdded = this.cartService.isAddCourse(this.course["$key"])
+     
+    //
     if(this.seat_left <= NOTIFY_LIMIT && this.seat_left > 0)
     {
         this.displayButton = this.seat_left + " Left. Signup!"
@@ -60,7 +62,13 @@ export class CoursesSignupButtonComponent implements OnInit {
         this.displayButton = "ADDED"
         this.buttonClass = "btn-default"
     }
-    
+
+    console.log(this.enroll)
+    if(this.enroll && this.enroll[this.course["$key"]])
+    {
+        this.displayButton = "ENROLL"
+        this.buttonClass = "disabled"
+    }
   
 
   }

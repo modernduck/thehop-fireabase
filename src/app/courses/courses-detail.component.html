@@ -30,11 +30,14 @@
                     <td>{{item.name}}</td>
                     <td>{{item.price}}</td>
                     <td >
-                        
+                        <div *ngIf="isQualify">
                             <button (click)="signup(item)" *ngIf="item.limit > 0" class="btn btn-success">SIGN UP</button>
                             <a routerLink=".." *ngIf="!(item.limit > 0)" class="btn btn-default">SOLD OUT</a>
-                        
-                        
+                        </div>
+                        <div *ngIf="!isQualify">
+                            <button (click)="requestToJoin(item)" *ngIf="item.limit > 0" class="btn btn-warning">REQUEST TO JOIN</button>
+                            <a routerLink=".." *ngIf="!(item.limit > 0)" class="btn btn-default">SOLD OUT</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

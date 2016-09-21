@@ -23,6 +23,7 @@ export class CoursesDetailComponent implements OnInit {
 
   ngOnInit() {
       //load course
+      
       this.route.params.forEach((params:Params) => {
           this.courseService.getCourse(params['key']).subscribe(c =>{
             this.course_key = params['key']
@@ -50,6 +51,14 @@ export class CoursesDetailComponent implements OnInit {
   {
     this.cartService.removeCourseFromCart(this.course_key)
     this.canRegister = !this.cartService.isAddCourse(this.course_key)
+  }
+
+  requestToJoin(){
+//    this.courseService.requestToJoin(this.course_key, )
+//console.log(this.lg.getCurrentUser)
+    this.lg.getCurrentUser(user=>{
+      this.courseService.requestToJoin(this.course, user)
+    })
   }
   
 
