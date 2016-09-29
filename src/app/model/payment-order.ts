@@ -30,6 +30,16 @@ export class PaymentOrder{
         
     }
 
+    public static getCourseOrder(course_key:string, course_price:number, reference:string){
+        var tempCart = [{
+            quantity:1,
+            price:course_price,
+            key:course_key,
+            reference:reference
+        }]
+        return new PaymentOrder(tempCart);
+    }
+
 
     getData(){
         var data={};
@@ -39,6 +49,8 @@ export class PaymentOrder{
                 unit_price:item.unit_price
             }
         })
+        console.log('gonn use')
+        console.log(data)
         return data;
     }
 }

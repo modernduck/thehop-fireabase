@@ -33,6 +33,17 @@ export class PaymentsListComponent implements OnInit {
   private display_payments;
 
 
+  transformPayment(raw_data){
+    var result =[];
+      raw_data.forEach(item=>{
+        var arr = item.$key.split('-')
+        result.push({
+          "$key":arr[0],
+          "$value":arr[1]
+        })
+      })
+      return result;
+  }
 
   loadData(event?:any){
       if(!event)
@@ -43,7 +54,7 @@ export class PaymentsListComponent implements OnInit {
       this.paymentService.getAllPaymentTransaction(event).subscribe(data=>{
         console.log('load data')
         console.log(data)
-          this.display_payments = data;
+          this.display_payments = this.transformPayment(data);
       })
   }
 

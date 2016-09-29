@@ -4,14 +4,15 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode, NgModule, Renderer } from '@angular/core';
 import { AppComponent }  from './app.component';
 import { LoginComponent, LogoutComponent } from "./login"
-import { CoursesComponent, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, CoursesGroupFormComponent, CoursesDayFormComponent, CourseTypeComponent, CoursesDetailComponent, CoursesApproveComponent } from './courses'
+import { CoursesComponent, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, CoursesGroupFormComponent, CoursesDayFormComponent, CourseTypeComponent, CoursesDetailComponent, CoursesApproveComponent, CoursesEnrollComponent } from './courses'
 import { ProfileComponent, ProfileEditComponent } from "./profile"
 import { GroupComponent, GroupFormComponent,GroupJoinedDisplayComponent,  GroupFinderComponent } from "./group"
 import { MenuComponent, MenuLoginComponent } from "./menu/"
-import { UsersFinderComponent, FilterByUserAttributePipe, FilterByUserGroupPipe } from "./users"
+import { UsersFinderComponent, FilterByUserAttributePipe, FilterByUserGroupPipe, FilterByUserScopePipe, UsersDisplayComponent } from "./users"
 import { CheckoutComponent, CheckoutBarComponent } from "./checkout"
 import { NotificationsComponent } from "./notifications"
 import { PaymentsMethodComponent, PaymentsTransferComponent, PaymentsThankyouComponent, PaymentsComponent, PaymentsListComponent, PaymentsDetailComponent } from "./payments"
+import { CheckinComponent } from "./checkin"
 import { AngularFireModule,AuthProviders, AuthMethods , FIREBASE_PROVIDERS} from 'angularfire2';
 import { LoginService } from "./login.service"
 import { UploadService } from "./upload.service"
@@ -21,6 +22,7 @@ import { CourseService } from "./course.service"
 import { CartService } from "./cart.service"
 import { NotificationsService } from  "./notifications.service"
 import { PaymentService } from "./payment.service"
+import { CheckinService } from "./checkin.service"
 import { routing } from './app.routing';
 import { Object2ArrayPipe, ObjectTrue2ArrayPipe, FilterByAttributePipe } from "./app.pipe"
 
@@ -59,9 +61,10 @@ const myFirebaseAuthConfig = {
     CourseService,
     CartService,
     NotificationsService,
-    PaymentService
+    PaymentService,
+    CheckinService
   ],
-  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, FilterByUserGroupPipe, CoursesGroupFormComponent, HighlightDirective, CoursesDayFormComponent, GroupFinderComponent, CourseTypeComponent,CoursesDetailComponent, CheckoutComponent, CheckoutBarComponent, NotificationsComponent, CoursesApproveComponent, PaymentsMethodComponent, PaymentsTransferComponent, PaymentsThankyouComponent, PaymentsComponent, PaymentsListComponent, PaymentsDetailComponent ],
+  declarations: [ AppComponent, LoginComponent, CoursesComponent, MenuComponent,MenuLoginComponent, LogoutComponent, ProfileComponent, ProfileEditComponent, GroupComponent, Object2ArrayPipe, ObjectTrue2ArrayPipe, GroupFormComponent, UsersFinderComponent, GroupJoinedDisplayComponent, FilterByAttributePipe, FilterByUserAttributePipe, DaysNumber2ObjectPipe, CoursesDayDisplayComponent, CoursesTeacherDisplayComponent, CoursesSignupButtonComponent, CoursesFormComponent, FilterByUserGroupPipe, CoursesGroupFormComponent, HighlightDirective, CoursesDayFormComponent, GroupFinderComponent, CourseTypeComponent,CoursesDetailComponent, CheckoutComponent, CheckoutBarComponent, NotificationsComponent, CoursesApproveComponent, PaymentsMethodComponent, PaymentsTransferComponent, PaymentsThankyouComponent, PaymentsComponent, PaymentsListComponent, PaymentsDetailComponent, CheckinComponent, FilterByUserScopePipe, CoursesEnrollComponent, UsersDisplayComponent ],
   bootstrap: [ AppComponent,
      
      

@@ -75,3 +75,25 @@ export class FilterByUserGroupPipe implements PipeTransform {
       return users;
   }
 }
+
+@Pipe({name: 'filterByUserScope'})
+export class FilterByUserScopePipe implements PipeTransform {
+  transform(users:Array<any> , scope:any): any{
+      if(typeof scope != "undefined" && users)
+        return users.filter((value, index, arr)=>{
+          
+          if(!scope[value.$key] && typeof( scope[value.$key]) == "boolean")
+          {
+            value.scope = false;
+            return true;
+          }else{
+            value.scope = true;
+            return scope[value.$key]
+          }
+            
+        })
+      else
+        return users;
+    
+  }
+}

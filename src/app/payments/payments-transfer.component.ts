@@ -74,6 +74,7 @@ export class PaymentsTransferComponent implements OnInit {
     this.paymentService.createTransferTransaction(this.current_user_key, this.payment_order, this.payment_transfer, this.payment_transaction).then(data=>{
         this.cartService.clearCart();
         console.log('transaction complete')
+        this.router.navigate(['payment/transfer/thankyou']);
     })
     
   }

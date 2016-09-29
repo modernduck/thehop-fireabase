@@ -5,10 +5,11 @@ import { Notification } from "./model/notification"
 
 const DAY_OBJECT = {"mon":2, "tue":3, "wed":5, "thu":7, "fri":11, "sat":13, "sun":17}
 const TYPE_PATH = "courses_type/"
-const ROOT_PATH = "courses"
+const ROOT_PATH = "courses/"
 const APPROVE_PATH = "users_waiting_approve_courses/"
 const USER_PATH = "users/"
 const USER_ENROLL_PATH = "users_enroll_courses/"
+const COURSE_ENROLL_USERS = "course_enroll_users/"
 @Injectable()
 export class CourseService {
 
@@ -120,15 +121,15 @@ export class CourseService {
   getCourse(key)
   {
     
-    return this.af.database.object(ROOT_PATH + "/" + key)
+    return this.af.database.object(ROOT_PATH  + key)
   }
 
   setCourse(key, course) {
-    console.log('path: ' +  (ROOT_PATH + "/" + key))
+    console.log('path: ' +  (ROOT_PATH + key))
     console.log(course)
     if(course.$key)
       delete course.$key
-    var promise = this.af.database.object((ROOT_PATH + "/" + key)).set(course)
+    var promise = this.af.database.object((ROOT_PATH + key)).set(course)
     promise.then(_ => console.log('success'))
   .catch(err => console.log(err, 'You dont have access!')); 
   }
@@ -148,8 +149,79 @@ export class CourseService {
     }
   }
 
+  private updateLimit(course_key:string, reference:string, operation:string, update_amount:number){
+    var current_subcribe;
+    var pm = new Promise<any>((resolve, reject)=>{
+      console.log('updateing:' + ROOT_PATH + course_key + "/group/" + reference)
+      current_subcribe = this.af.database.object(ROOT_PATH + course_key + "/group/" + reference).subscribe(data=>{
+        resolve(data.limit)
+      })
+    })
+    pm.then(limit =>{
+      current_subcribe.unsubscribe();
+      console.log('to ' + operation + update_amount);
+      console.log('path ' + ROOT_PATH + course_key + "/group/" + reference)
+      if(operation == "-" && limit - update_amount >= 0)
+          this.af.database.object(ROOT_PATH + course_key + "/group/" + reference).update({limit:(limit - update_amount)})
+      else if(operation == "+")
+        this.af.database.object(ROOT_PATH + course_key + "/group/" + reference).update({limit:(limit + update_amount)})
+        
+    })
+  }
+
+  /*
+  * use email to be key in course_enroll and 
+  */
+  enrollUser(course_key:string, user_key:string, reference:string){
+    this.af.database.object(COURSE_ENROLL_USERS + course_key + "/" + user_key).set(reference)
+    this.af.database.object(USER_ENROLL_PATH + user_key + "/" + course_key).set(reference)
+    //decrese accept amount
+    this.updateLimit(course_key, reference, "-", 1);
+    
+  }
+
+  removeEnrollUser(course_key:string, user_key:string, reference:string){
+    this.af.database.object(COURSE_ENROLL_USERS + course_key + "/" + user_key).remove()
+    this.af.database.object(USER_ENROLL_PATH + user_key + "/" + course_key).remove()
+    //increse limit amount
+    this.updateLimit(course_key, reference, "+", 1);
+  }
+
   getEnrollCourses(user_key:string){
     return this.af.database.object(USER_ENROLL_PATH + user_key)
+  }
+
+  getEnrollUsers(course_key:string):Promise<Array<any>>{
+    //return this.af.database.object(COURSE_ENROLL_USERS + course_key);
+    return new Promise<Array<any>>((resolve, reject) =>{
+      
+        this.af.database.object(COURSE_ENROLL_USERS + course_key).subscribe(data=>{
+          //var users = [];
+          var _users = {};
+          var count = 0;
+          var _do_count = 0;
+          for(var user_key in data)
+            if(user_key != "$key")
+            {
+              _users[user_key] = { reference:data[user_key] };
+              this.af.database.object('users/' + user_key).subscribe(user=>{
+                  _users[user.$key].user = user;
+                  _do_count++;
+                  if(_do_count == count){
+                    var users =[];
+                    for(var k in _users)
+                      users.push(_users[k]);
+                    resolve(users)
+                  }
+
+              })
+              count++;
+            }
+              
+          
+          //resolve(users)
+        })
+    })
   }
 
   public static daysToObject(days_number) {
@@ -180,6 +252,18 @@ export class CourseService {
     return start_number
   }
 
+  public static getCourseKey(code){
+    return code + (new Date().getTime())
+  }
+
+  public  getInfoFromKey(course_key){
+    var result ={code:'', create_time:''}
+    //13 = get Time()
+    result.code = course_key.slice(0, course_key.length - 13)
+    result.create_time = course_key.slice( course_key.length - 13)
+    return result; 
+    
+  }
 
 
 

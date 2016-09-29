@@ -10,7 +10,8 @@ import { LoginService } from '../login.service'
   styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  private email:string;
+  private password:string;
   constructor(private af:AngularFire, private auth:FirebaseAuth,  private router: Router, private loginService:LoginService) {
     
      
@@ -33,6 +34,14 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.loginService.login()
+  }
+
+  passwordLogin(){
+    this.loginService.passwordLogin(this.email, this.password);
+  }
+
+  signup(){
+    this.loginService.signup(this.email, this.password)
   }
 
 }

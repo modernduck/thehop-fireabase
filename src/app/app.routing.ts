@@ -2,9 +2,10 @@ import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent, LogoutComponent }      from './login';
 import { ProfileComponent, ProfileEditComponent } from "./profile"
-import { CoursesComponent, CoursesFormComponent, CoursesDetailComponent, CoursesApproveComponent } from "./courses";
+import { CoursesComponent, CoursesFormComponent, CoursesDetailComponent, CoursesApproveComponent, CoursesEnrollComponent } from "./courses";
 import { GroupComponent, GroupFormComponent } from "./group"
 import { CheckoutComponent } from "./checkout"
+import { CheckinComponent } from "./checkin"
 import { PaymentsMethodComponent, PaymentsTransferComponent,PaymentsThankyouComponent, PaymentsComponent, PaymentsListComponent, PaymentsDetailComponent } from "./payments"
 const appRoutes: Routes = [
   {
@@ -49,8 +50,16 @@ const appRoutes: Routes = [
     component: CoursesApproveComponent
   },
   {
+    path:"courses/enroll/:key",
+    component:CoursesEnrollComponent
+  },
+  {
     path:'courses/:key',
     component: CoursesDetailComponent
+  },
+  {
+    path:"checkin",
+    component: CheckinComponent
   },
   {
     path:"checkout",
@@ -59,6 +68,7 @@ const appRoutes: Routes = [
   {
     path:"payment",
     component:PaymentsComponent
+  
   },
   {
     path:"payment/list",

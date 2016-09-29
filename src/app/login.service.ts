@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState} from 'angularfire2';
+import {AngularFire, FirebaseObjectObservable, FirebaseAuth, FirebaseAuthState, AuthMethods, AuthProviders} from 'angularfire2';
 
 import { UserService } from './user.service'
 import { PromiseUser } from "./model/promise-user"
@@ -38,7 +38,14 @@ export class LoginService {
        
       if(typeof data.email == "undefined")
       {
-        this.userService.setUser(uid, this.userService.getNewGoogleUser(this.user.auth))
+        //if new new do this
+        this.userService.isTempUser(this.user.auth.email).then(is_temp_user =>{
+          if(!is_temp_user)
+            this.userService.setUser(uid, this.userService.getNewGoogleUser(this.user.auth))
+          else
+            this.userService.moveTempUser(uid, this.user.auth.email)
+        })
+        
         
       }
       
@@ -89,6 +96,22 @@ export class LoginService {
     this.auth.logout();
   }
 
+  signup(email:string, password:string){
+    this.auth.createUser({
+      email:email,
+      password:password
+    })
+  }
+
+  passwordLogin(email:string, password:string){
+    this.auth.login({
+        email:email,
+        password:password
+    },{
+      provider: AuthProviders.Password,
+      method: AuthMethods.Password,
+    })
+  }
 
 
   getCurrentUser(callback)

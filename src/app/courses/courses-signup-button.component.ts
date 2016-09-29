@@ -32,13 +32,19 @@ export class CoursesSignupButtonComponent implements OnChanges {
   private full_group=[]
   private group
   private isAdded = false;
+  private isPlus = false;
   
   ngOnChanges(changes:SimpleChanges){
   //ngOnChanges(changes:SimpleChanges){
     this.group = this.course.group
     for(var g in this.group){
         if(this.group[g].public) {
-            this.seat_left+= this.group[g].limit;
+            if(!this.isPlus)
+            {
+                this.seat_left+= this.group[g].limit;
+                this.isPlus = true;
+            }
+            
             if(this.group[g].limit == 0) {
                 this.full_group.push(this.group[g].name)
             }
@@ -63,7 +69,7 @@ export class CoursesSignupButtonComponent implements OnChanges {
         this.buttonClass = "btn-default"
     }
 
-    console.log(this.enroll)
+    //console.log(this.enroll)
     if(this.enroll && this.enroll[this.course["$key"]])
     {
         this.displayButton = "ENROLL"

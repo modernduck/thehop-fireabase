@@ -3,10 +3,11 @@
 import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
-import { PaymentsComponent } from './payments.component';
+import { CheckinComponent } from './checkin.component';
 
-describe('Component: Payments', () => {
+describe('Component: Checkin', () => {
   it('should create an instance', () => {
-    
+    let component = CheckinComponent;
+    expect(component).toBeTruthy();
   });
 });

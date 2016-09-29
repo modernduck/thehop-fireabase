@@ -20,6 +20,9 @@ export class UsersFinderComponent implements OnInit {
   @Input()
   group
 
+  @Input()
+  scope
+
   @Output()
   onSelected = new EventEmitter<any>();
 
@@ -34,7 +37,7 @@ export class UsersFinderComponent implements OnInit {
 
      if(typeof this.group == "undefined")
         this.group = "";
-    
+      
       
   }
 

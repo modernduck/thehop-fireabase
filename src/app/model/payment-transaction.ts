@@ -15,7 +15,7 @@ export class PaymentTransaction{
     public total:number;
     public transfer_date:string;
     public transfer_time:string;
-    private fields=["payment_type", "payment_reference", "status", "total", "discount", "fee"]
+    private fields=["payment_type", "payment_reference", "status", "total", "discount", "fee", "transfer_date", "transfer_time"]
     /*constructor(payment_type:string, payment_reference:string, status:string, total:number, discount:number, fee:number){
            this.payment_type = payment_type;
            this.payment_reference = payment_reference;

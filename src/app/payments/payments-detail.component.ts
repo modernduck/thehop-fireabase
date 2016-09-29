@@ -43,6 +43,9 @@ import { ActivatedRoute, Params } from "@angular/router"
 
     </tr>
   </table>
+  <h3>User</h3>
+  
+  <users-display [userKey]="user_key"></users-display>
   <div >
     <a class="btn btn-primary" routerLink="../..">Back</a>
     <button class="btn btn-success" (click)="save()">Save</button>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 
 import { PaymentOrder, PaymentOrderItem } from "./model/payment-order"
-
+import { CourseService } from "./course.service"
 import {  PaymentTransaction, PaymentTransfer } from "./model/payment-transaction"
 import { NotificationsService } from "./notifications.service"
 import { Notification } from "./model/notification"
@@ -14,11 +14,12 @@ const ORDER_PATH = "payment_order/"
 const PAYMENT_STATUS_PATH = "payment_transactions_status/"
 const USER_ENROLL_PATH = "users_enroll_courses/"
 const COURSE_HAS_USERS = "course_enroll_users/"
+const COURSE_ROOT_PATH = "courses/"
 var global_is_update = false;
 @Injectable()
 export class PaymentService {
 
-  constructor(private af:AngularFire, private nt:NotificationsService) { }
+  constructor(private af:AngularFire, private nt:NotificationsService, private courseService:CourseService) { }
 
   getTypes() {
     return this.af.database.list(TYPE_PATH);
@@ -41,6 +42,11 @@ export class PaymentService {
             resolve({
               url: ("slip/" + user_key ),
               file_name:data.$value
+            })
+          else
+             resolve({
+              url: ("slip/" + user_key ),
+              file_name:0
             })
       } )
 
@@ -66,7 +72,11 @@ export class PaymentService {
         var is_update = false;
         var pm = new Promise<any>( (resolve, reject) =>{
           this.af.database.object(TRANSACTION_PATH + user_key + "/slip_count").subscribe(data=>{
+            if(data && typeof data.$value == "number")
               resolve(data.$value)
+            else
+              resolve(0)//default value
+
           })
         })
 
@@ -88,15 +98,45 @@ export class PaymentService {
 
         this.af.database.object(TRANSACTION_PATH + user_key + "/" + now).set(payment_transaction.getData())
         //update payment status
-        this.af.database.object(PAYMENT_STATUS_PATH + "uploaded/" + this.generatePaymentStatusKey(user_key, now)).set(true )
+        this.af.database.object(PAYMENT_STATUS_PATH + "uploaded/" + user_key + "-"  + now ).set(true )
         
         //this.af.database.object(USER_ENROLL_PATH + user_key + "/" + course_id).set(true)
 
         //create payment_order
         return this.af.database.object(ORDER_PATH + user_key + "/" + now).set(payment_order)
-
-       
+     
   }
+
+  /*
+  * 
+  */
+  createCourseCashTransaction(user_key:string, course_key:string, reference:string, payment_amount:number){
+    
+    this.af.database.object(COURSE_ROOT_PATH + course_key + "/group/" + reference).subscribe( course_group =>{
+        //var price = course_group.price;
+        var payment_order = PaymentOrder.getCourseOrder(course_key, course_group.price, reference)
+        this.courseService.enrollUser(course_key, user_key, reference);
+        var payment_transaction = new PaymentTransaction();
+        payment_transaction.payment_type = "cash";
+        payment_transaction.status = "completed"
+        payment_transaction.total = payment_amount;
+        payment_transaction.fee = 0;
+        payment_transaction.discount = 0;
+        var now_js_date = new Date();
+        payment_transaction.transfer_date = now_js_date.toISOString().slice(0, 10);
+        payment_transaction.transfer_time = now_js_date.toISOString().slice(11,19);
+        payment_transaction.payment_reference = "current user login";
+        var now = now_js_date.getTime()
+        this.af.database.object(TRANSACTION_PATH + user_key + "/" + now).set(payment_transaction.getData())
+        this.af.database.object(PAYMENT_STATUS_PATH + "completed/" + user_key + "-" + now ).set(true )
+        this.af.database.object(ORDER_PATH + user_key + "/" + now).set(payment_order.getData())
+
+    })
+    //var payment_order = new PaymentOrder()
+  }
+
+
+
 
   getPaymentTransaction(user_key:string, time_key){
     return this.af.database.object(TRANSACTION_PATH + user_key + "/" + time_key)
@@ -133,8 +173,10 @@ export class PaymentService {
               var cart_item = PaymentOrderItem.loadToCart(item)
               //USER_ENROLL_PATH
               //need to check if item is course or not
-              this.af.database.object(USER_ENROLL_PATH + user_key + "/" + cart_item.key).set(cart_item.reference)
-              this.af.database.object(COURSE_HAS_USERS + cart_item.key + "/" + user_key).set(cart_item.reference)
+              this.courseService.enrollUser(cart_item.key, user_key, cart_item.reference)
+              /*this.af.database.object(USER_ENROLL_PATH + user_key + "/" + cart_item.key).set(cart_item.reference)
+              this.af.database.object(COURSE_HAS_USERS + cart_item.key + "/" + user_key).set(cart_item.reference)*/
+
               this.nt.sendToTeacher(cart_item.key, new Notification("course_approved", {
                 "course_name" : cart_item.key
               }, "/courses"))    
@@ -153,8 +195,9 @@ export class PaymentService {
               var cart_item = PaymentOrderItem.loadToCart(item)
               //USER_ENROLL_PATH
               //need to check if item is course or not
-              this.af.database.object(USER_ENROLL_PATH + user_key + "/" + cart_item.key).remove()
-              this.af.database.object(COURSE_HAS_USERS + cart_item.key + "/" + user_key).remove()
+              this.courseService.removeEnrollUser(cart_item.key, user_key, cart_item.reference)
+              //this.af.database.object(USER_ENROLL_PATH + user_key + "/" + cart_item.key).remove()
+              //this.af.database.object(COURSE_HAS_USERS + cart_item.key + "/" + user_key).remove()
                this.nt.send(user_key, new Notification("denied_course", {
                 "course_name" : cart_item.key
               }, "/courses"))
@@ -163,8 +206,16 @@ export class PaymentService {
         }
         if(data.status != payment_transaction.status)
         {
-          this.af.database.object(PAYMENT_STATUS_PATH + data.status + "/" + user_key ).remove()
-          this.af.database.object(PAYMENT_STATUS_PATH + payment_transaction.status + "/" + user_key  ).set(time_key)
+          console.log('remove status: ' + PAYMENT_STATUS_PATH + data.status + "/"+ user_key + "-" + data.$key)
+          console.log('add status:' + PAYMENT_STATUS_PATH + payment_transaction.status + "/" + user_key + "-" + time_key)
+          
+          var pm:Promise<any> = this.af.database.object(PAYMENT_STATUS_PATH + data.status + "/"+ user_key + "-" + data.$key ).remove()
+          pm.then(data=>{
+            console.log('delete success')
+          }).catch(err =>{
+            console.log('cant delete')
+          })
+          this.af.database.object(PAYMENT_STATUS_PATH + payment_transaction.status + "/" + user_key + "-" + time_key ).set(true)
         }
         delete payment_transaction.$key
         
